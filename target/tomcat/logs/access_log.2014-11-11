@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [11/Nov/2014:12:59:59 +0200] "GET /app/mvc/employee/all HTTP/1.1" 200 13 http-bio-8080-exec-1 102
+0:0:0:0:0:0:0:1 - - [11/Nov/2014:12:59:59 +0200] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-2 0
