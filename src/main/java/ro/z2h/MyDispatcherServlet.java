@@ -1,6 +1,7 @@
 package ro.z2h;
 
 import ro.z2h.annotation.MyController;
+import ro.z2h.annotation.MyRequestMethod;
 import ro.z2h.controller.DepartmentController;
 import ro.z2h.controller.EmployeeController;
 import ro.z2h.fmk.AnnotationScanUtils;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 
 public class MyDispatcherServlet extends HttpServlet{
@@ -29,12 +31,20 @@ public class MyDispatcherServlet extends HttpServlet{
 
                 if (aClass.isAnnotationPresent(MyController.class)) {
                     Annotation anot = aClass.getAnnotation(MyController.class);
-                    System.out.println(((MyController)anot).urlPath());
-                }
-            //
-               // if (anot != null)
+                    System.out.println(((MyController) anot).urlPath());
 
+                    Method[] methods = aClass.getDeclaredMethods();
+
+                    for (Method met : methods)
+                        if (met.isAnnotationPresent(MyRequestMethod.class)) {
+                            MyRequestMethod ann = met.getAnnotation(MyRequestMethod.class);
+                            System.out.println(((MyController) anot).urlPath() + ann.urlPath());
+                        }
+                }
+                //
+                // if (anot != null)
             }
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
