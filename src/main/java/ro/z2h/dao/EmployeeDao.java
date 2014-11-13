@@ -30,11 +30,13 @@ public class EmployeeDao {
 
     public Employee getEmployeeById(Connection con, Long id) throws SQLException {
         Statement stmt = con.createStatement();
-        PreparedStatement preparedStatement = con.prepareStatement("");
-        preparedStatement.setMaxRows(5);
+
 
         String selectAllFromTableString = "SELECT employee_id,first_name,last_name,email,phone_number,hire_date,job_id,salary,commission_pct,manager_id,department_id " +
                 "FROM Employees WHERE employee_id = " + id;
+
+        PreparedStatement preparedStatement = con.prepareStatement(selectAllFromTableString);
+        preparedStatement.setMaxRows(5);
         ResultSet rs = stmt.executeQuery(selectAllFromTableString);
         ArrayList<Employee> employees = ResultSetToPojoConverter.convertToEmployee(rs, con);
         stmt.close();
@@ -102,7 +104,7 @@ public class EmployeeDao {
             String deleteStatement = "DELETE FROM " + tableName + " WHERE employee_id = " + employee.getId();
             stmt.executeUpdate(deleteStatement);
             stmt.close();
-            System.out.println("Dropped table " + tableName + " from database...");
+            System.out.println("Delete employee from " + tableName + " from database...");
         } catch (SQLException e) {
             e.printStackTrace();
         }
